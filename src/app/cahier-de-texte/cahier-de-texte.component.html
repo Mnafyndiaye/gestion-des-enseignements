@@ -29,5 +29,59 @@
             <button id="btn-supprimer" style="display: none;">Supprimer</button>
         </div>
     </div>
+    <script>
+        // Récupérer les éléments HTML
+        const modalAjouter = document.getElementById('modal-ajouter');
+        const btnAjouter = document.getElementById('btn-ajouter');
+        const btnValiderAjout = document.getElementById('btn-valider-ajout');
+        const btnModifier = document.getElementById('btn-modifier');
+        const btnSupprimer = document.getElementById('btn-supprimer');
+        const closeBtn = document.querySelector('.close');
+        const cahierTexte = document.getElementById('cahier-texte');
+
+        // Ouvrir le modal d'ajout
+        btnAjouter.onclick = function() {
+            modalAjouter.style.display = 'block';
+        }
+
+        // Fermer le modal d'ajout en cliquant sur le bouton 'x' ou en dehors du modal
+        closeBtn.onclick = function() {
+            modalAjouter.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modalAjouter) {
+                modalAjouter.style.display = 'none';
+            }
+        }
+
+        // Ajouter une nouvelle entrée dans le cahier de texte
+        btnValiderAjout.onclick = function() {
+            const selectCours = document.getElementById('select-cours');
+            const date = document.getElementById('date').value;
+            const description = document.getElementById('description').value;
+
+            // Créer un nouvel élément li
+            const nouvelleEntree = document.createElement('li');
+            nouvelleEntree.textContent = ${selectCours.value} - ${date}: ${description};
+
+            // Ajouter la nouvelle entrée à la liste du cahier de texte
+            cahierTexte.appendChild(nouvelleEntree);
+
+            // Afficher les boutons "Modifier" et "Supprimer"
+            btnModifier.style.display = 'inline';
+            btnSupprimer.style.display = 'inline';
+
+            // Fermer le modal d'ajout
+            modalAjouter.style.display = 'none';
+        }
+
+        // Supprimer une entrée du cahier de texte
+        btnSupprimer.onclick = function() {
+            cahierTexte.innerHTML = ''; // Effacer toutes les entrées
+            btnModifier.style.display = 'none'; // Masquer le bouton "Modifier"
+            btnSupprimer.style.display = 'none'; // Masquer le bouton "Supprimer"
+        }
+    </script>
 </body>
 </html>
