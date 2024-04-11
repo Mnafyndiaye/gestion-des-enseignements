@@ -9,6 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { ProfilEtudiantComponent } from './profil-etudiant/profil-etudiant.component';
 import { EvaluationEnseignementComponent } from './evaluation-enseignement/evaluation-enseignement.component';
 import { CahierDeTexteComponent } from './cahier-de-texte/cahier-de-texte.component';
+import { SyllabusCoursComponent } from './syllabus-cours/syllabus-cours.component';
+import { ProfilEnseignantComponent } from './profil-enseignant/profil-enseignant.component';
+import { StudentSidebarComponent } from './student-sidebar/student-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { CahierDeTexteComponent } from './cahier-de-texte/cahier-de-texte.compon
     HomeComponent,
     ProfilEtudiantComponent,
     EvaluationEnseignementComponent,
-    CahierDeTexteComponent
+    CahierDeTexteComponent,
+    SyllabusCoursComponent,
+    ProfilEnseignantComponent,
+    StudentSidebarComponent
   ],
   imports: [
     BrowserModule,
