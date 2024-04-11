@@ -1,1 +1,33 @@
 <p>cahier-de-texte works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gérer Cahier de Texte</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Gérer Cahier de Texte</h1>
+    <ul id="cahier-texte">
+        <!-- Les ajouts seront affichés ici -->
+    </ul>
+    <button id="btn-ajouter">Ajouter Entrée</button> 
+    <div id="modal-ajouter" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            
+            <select id="select-cours">
+                <option value="Java">Java</option>
+                <option value="MSI">MSI</option>
+                <option value="HTML">HTML</option>
+            </select>
+            <input type="date" id="date">
+            <textarea id="description" placeholder="Description..."></textarea>
+            <button id="btn-valider-ajout">Valider</button>
+            <button id="btn-modifier" style="display: none;">Modifier</button>
+            <button id="btn-supprimer" style="display: none;">Supprimer</button>
+        </div>
+    </div>
+</body>
+</html>
