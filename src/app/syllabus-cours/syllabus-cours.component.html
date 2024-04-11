@@ -27,6 +27,82 @@
             <button id="btn-supprimer-syllabus" style="display: none;">Supprimer</button>
         </div>
     </div>
-    <script src="script1.js"></script>
+    <script>
+        // Récupérer les éléments HTML
+        const modalSyllabus = document.getElementById('modal-syllabus');
+        const btnAjouterSyllabus = document.getElementById('btn-ajouter-syllabus');
+        const btnValiderSyllabus = document.getElementById('btn-valider-syllabus'); // Correction du nom de la variable
+        const btnModifierSyllabus = document.getElementById('btn-modifier-syllabus');
+        const btnSupprimerSyllabus = document.getElementById('btn-supprimer-syllabus');
+        const closeBtnSyllabus = document.querySelector('.close');
+        const syllabusList = document.getElementById('syllabus-list');
+
+        // Ouvrir le modal d'ajout de syllabus
+        btnAjouterSyllabus.onclick = function() {
+            modalSyllabus.style.display = 'block';
+        }
+
+        // Fermer le modal d'ajout en cliquant sur le bouton 'x' ou en dehors du modal
+        closeBtnSyllabus.onclick = function() {
+            modalSyllabus.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modalSyllabus) {
+                modalSyllabus.style.display = 'none';
+            }
+        }
+
+        // Ajouter un nouveau syllabus
+        btnValiderSyllabus.onclick = function() { // Correction du nom de la variable
+            const selectCoursSyllabus = document.getElementById('select-cours-syllabus');
+            const fileSyllabus = document.getElementById('file-syllabus').files[0];
+            const fileName = fileSyllabus ? fileSyllabus.name : '';
+
+            // Créer un nouvel élément li
+            const nouveauSyllabus = document.createElement('li');
+
+            // Créer un conteneur div pour organiser les éléments
+            const syllabusItem = document.createElement('div');
+            syllabusItem.classList.add('syllabus-item');
+
+            // Créer le lien pour le document
+            const link = document.createElement('a');
+            link.href = fileName;
+            link.download = fileName;
+            link.textContent = selectCoursSyllabus.value;
+            syllabusItem.appendChild(link);
+
+            // Créer les boutons "Modifier" et "Supprimer"
+            const btnModifier = document.createElement('button');
+            btnModifier.textContent = 'Modifier';
+            btnModifier.onclick = function() {
+                // Implémentez la logique de modification ici
+                alert('Fonctionnalité de modification à implémenter.');
+            };
+            syllabusItem.appendChild(btnModifier);
+
+            const btnSupprimer = document.createElement('button');
+            btnSupprimer.textContent = 'Supprimer';
+            btnSupprimer.onclick = function() {
+                // Supprimer l'élément de la liste
+                syllabusList.removeChild(nouveauSyllabus);
+            };
+            syllabusItem.appendChild(btnSupprimer);
+
+            // Ajouter le conteneur div à la liste du syllabus
+            nouveauSyllabus.appendChild(syllabusItem);
+
+            // Ajouter le nouvel élément à la liste du syllabus
+            syllabusList.appendChild(nouveauSyllabus);
+
+            // Afficher les boutons "Modifier" et "Supprimer" une fois qu'un syllabus est ajouté
+            btnModifierSyllabus.style.display = 'inline';
+            btnSupprimerSyllabus.style.display = 'inline';
+
+            // Fermer le modal d'ajout
+            modalSyllabus.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
