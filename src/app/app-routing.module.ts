@@ -35,7 +35,7 @@ const routes: Routes = [
         component: CahierDeTexteComponent
       },
       {
-        path: 'profil-etudiant/evaluation-enseignement',
+        path: 'evaluation-enseignement',
         component: EvaluationEnseignementComponent
       },
       {
