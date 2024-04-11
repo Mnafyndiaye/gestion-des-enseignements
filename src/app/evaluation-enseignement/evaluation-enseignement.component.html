@@ -1,1 +1,75 @@
-<p>evaluation-enseignement works!</p>
+<body>
+    <form action="#" method="post">
+        <!-- Section 1: PRESENTATION DE L’ENSEIGNEMENT -->
+        <h2> PRESENTATION DE L’ENSEIGNEMENT</h2>
+        <div>
+            <label for="syllabus">1. Le syllabus est-il fourni ?</label><br>
+            <input type="radio" id="syllabus-oui" name="syllabus" value="oui">
+            <label for="syllabus-oui">OUI</label><br>
+            <input type="radio" id="syllabus-non" name="syllabus" value="non">
+            <label for="syllabus-non">NON</label><br>
+
+            <label for="objectifs">2. Les objectifs du cours sont-ils clairement énoncés dans le syllabus ?</label><br>
+            <input type="radio" id="objectifs-oui" name="objectifs" value="oui">
+            <label for="objectifs-oui">OUI</label><br>
+            <input type="radio" id="objectifs-non" name="objectifs" value="non">
+            <label for="objectifs-non">NON</label><br>
+        </div>
+
+        <!-- Section 2: DEROULEMENT DE L’ENSEIGNEMENT -->
+        <h2> DEROULEMENT DE L’ENSEIGNEMENT</h2>
+        <div>
+            <label for="conforme">1. Le contenu du cours est-il conforme aux objectifs énoncés dans le syllabus ?</label><br>
+            <input type="radio" id="conforme-oui" name="conforme" value="oui">
+            <label for="conforme-oui">OUI</label><br>
+            <input type="radio" id="conforme-non" name="conforme" value="non">
+            <label for="conforme-non">NON</label><br>
+
+            <label for="support">2. Le support de cours est-il fourni ?</label><br>
+            <input type="radio" id="support-oui" name="support" value="oui">
+            <label for="support-oui">OUI</label><br>
+            <input type="radio" id="support-non" name="support" value="non">
+            <label for="support-non">NON</label><br>
+        </div>
+
+        <!-- Section 3: CONDITION D’APPRENTISSAGE -->
+        <h2> CONDITION D’APPRENTISSAGE</h2>
+        <div>
+            <label for="salle">5. Capacités des salles :</label><br>
+            <select id="salle" name="salle">
+                <option value="petite">Petite</option>
+                <option value="moyenne">Moyenne</option>
+                <option value="grande">Grande</option>
+            </select><br>
+
+            <!-- Ajouter d'autres questions similaires ici -->
+        </div>
+
+        <!-- Section 4: SUGGESTIONS POUR L’AMELIORATION DE L’ENSEIGNEMENT -->
+        <h2> SUGGESTIONS POUR L’AMELIORATION DE L’ENSEIGNEMENT</h2>
+        <div>
+            <label for="liens-ec">1. Comment jugez-vous le lien de cet EC avec les autres EC de l’UE ?</label><br>
+            <input type="radio" id="liens-ec-sans-rapport" name="liens-ec" value="sans-rapport">
+            <label for="liens-ec-sans-rapport">Sans rapport</label><br>
+            <input type="radio" id="liens-ec-peu-lies" name="liens-ec" value="peu-lies">
+            <label for="liens-ec-peu-lies">Peu liés</label><br>
+            <input type="radio" id="liens-ec-tres-lies" name="liens-ec" value="tres-lies">
+            <label for="liens-ec-tres-lies">Très liés</label><br>
+
+            <!-- Ajouter d'autres questions similaires ici -->
+        </div>
+
+        <!-- Section 5: COMMENTAIRES ET SUGGESTIONS -->
+        <h2> COMMENTAIRES ET SUGGESTIONS</h2>
+        <div>
+            <label for="commentaires">Quelles autres suggestions pouvez-vous faire pour l’amélioration des enseignements ?</label><br>
+            <textarea id="commentaires" name="commentaires" rows="4" cols="50"></textarea>
+        </div>
+
+        <!-- Bouton de validation -->
+        <h2>VALIDER</h2>
+        <div>
+            <button type="submit">VALIDER</button>
+        </div>
+    </form>
+</body>

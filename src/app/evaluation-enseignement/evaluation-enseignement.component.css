@@ -1,0 +1,52 @@
+/* Stylisation du formulaire */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #0504273d; /* Bleu foncé */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Stylisation des étiquettes */
+label {
+    font-weight: bold;
+    color: #fff; /* Blanc */
+}
+
+/* Stylisation des champs de saisie */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #666; /* Gris foncé */
+    border-radius: 5px;
+    background-color: #2c2c2c; /* Gris foncé */
+    color: #fff; /* Blanc */
+}
+
+/* Stylisation des boutons */
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Stylisation des boutons lorsqu'ils sont survolés */
+button:hover {
+    background-color: #0056b3;
+}
+/* Couleur de fond de la page entière */
+body {
+    background-color: #020c22; /* Bleu foncé */
+}
+/* Stylisation des titres */
+h2 {
+    color: #ccc; /* Gris clair */
+}

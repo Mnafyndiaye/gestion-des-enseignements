@@ -12,6 +12,7 @@ import { CahierDeTexteComponent } from './cahier-de-texte/cahier-de-texte.compon
 import { SyllabusCoursComponent } from './syllabus-cours/syllabus-cours.component';
 import { ProfilEnseignantComponent } from './profil-enseignant/profil-enseignant.component';
 import { StudentSidebarComponent } from './student-sidebar/student-sidebar.component';
+import { TeacherSidebarComponent } from './teacher-sidebar/teacher-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { StudentSidebarComponent } from './student-sidebar/student-sidebar.compo
     CahierDeTexteComponent,
     SyllabusCoursComponent,
     ProfilEnseignantComponent,
-    StudentSidebarComponent
+    StudentSidebarComponent,
+    TeacherSidebarComponent
   ],
   imports: [
     BrowserModule,

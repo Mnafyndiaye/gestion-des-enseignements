@@ -37,6 +37,10 @@ const routes: Routes = [
       {
         path: 'evaluation-enseignement',
         component: EvaluationEnseignementComponent
+      },
+      {
+        path: 'syllabus-cours',
+        component: SyllabusCoursComponent
       }
     ]
   },
@@ -44,10 +48,6 @@ const routes: Routes = [
     path: 'profil-enseignant',
     component: ProfilEnseignantComponent
   },
-  {
-    path: 'syllabus-cours',
-    component: SyllabusCoursComponent
-  }
 
 ];
 
