@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gérer Syllabus</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Gérer Syllabus</h1>
+    <ul id="syllabus-list">
+        <!-- Les syllabus seront affichés ici -->
+    </ul>
+    <button id="btn-ajouter-syllabus">Ajouter Syllabus</button>
+    <div id="modal-syllabus" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Ajouter Syllabus</h3>
+            <select id="select-cours-syllabus">
+                <option value="Java">Java</option>
+                <option value="MSI">MSI</option>
+                <option value="HTML">HTML</option>
+            </select>
+            <input type="file" id="file-syllabus" accept=".pdf,.doc,.docx">
+            <button id="btn-valider-syllabus">Valider</button>
+            <button id="btn-modifier-syllabus" style="display: none;">Modifier</button>
+            <button id="btn-supprimer-syllabus" style="display: none;">Supprimer</button>
+        </div>
+    </div>
+    <script src="script1.js"></script>
+</body>
+</html>
