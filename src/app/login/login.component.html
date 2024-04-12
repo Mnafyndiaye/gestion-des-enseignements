@@ -7,10 +7,10 @@
           <h3 class="mb-0">Login</h3>
         </div>
         <div class="card-body">
-          <form class="form" #loginForm="ngForm">
+          <form class="form" #loginForm="ngForm" (submit)="loginUser()">
             <div class="form-group">
               <label for="email">Email</label>
-              <input [(ngModel)]="loginUserData.email" name="email" type="email" class="form-control rounded-0" placeholder="Email" [required]="true" [email]="true" #email="ngModel">
+              <input id="email" [(ngModel)]="loginUserData.email" name="email" type="email" class="form-control rounded-0" placeholder="Email" [required]="true" [email]="true" #email="ngModel">
               <div *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid-feedback d-block">
                 <div *ngIf="email.errors?.['required']">Email is required.</div>
                 <div *ngIf="email.errors?.['email']">Invalid email format.</div>
@@ -18,13 +18,13 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input [(ngModel)]="loginUserData.password" name="password" type="password" class="form-control rounded-0" placeholder="Password" [required]="true" [minlength]="6" #password="ngModel">
+              <input id="password" [(ngModel)]="loginUserData.password" name="password" type="password" class="form-control rounded-0" placeholder="Password" [required]="true" [minlength]="6" #password="ngModel">
               <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback d-block">
                 <div *ngIf="password.errors?.['required']">Password is required.</div>
                 <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters long.</div>
               </div>
             </div>
-            <button (click)="loginUser()" type="button" [disabled]="loginForm.invalid" class="btn btn-success btn-block rounded-0">Login</button>
+            <button (click)="loginUser()" type="submit" [disabled]="loginForm.invalid" class="btn btn-success btn-block rounded-0">Login</button>
           </form>                              
         </div>
       </div>

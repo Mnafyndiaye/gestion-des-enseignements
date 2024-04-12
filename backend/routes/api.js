@@ -8,7 +8,7 @@ const authController = require('../controllers/authController');
 router.post('/login', authController.login);
 
 // Route pour la déconnexion
-router.post('/logout', authController.logout);
+//router.post('/logout', authController.logout);
 
 // Autres routes d'authentification...
 
