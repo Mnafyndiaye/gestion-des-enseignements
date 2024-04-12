@@ -7,6 +7,7 @@ import { ProfilEnseignantComponent } from './profil-enseignant/profil-enseignant
 import { CahierDeTexteComponent } from './cahier-de-texte/cahier-de-texte.component';
 import { SyllabusCoursComponent } from './syllabus-cours/syllabus-cours.component';
 import { EvaluationEnseignementComponent } from './evaluation-enseignement/evaluation-enseignement.component';
+import { AffichageSyllabusComponent } from './affichage-syllabus/affichage-syllabus.component';
 
 const routes: Routes = [
   {
@@ -39,14 +40,28 @@ const routes: Routes = [
         component: EvaluationEnseignementComponent
       },
       {
-        path: 'syllabus-cours',
-        component: SyllabusCoursComponent
+        path: 'affichage-syllabus',
+        component: AffichageSyllabusComponent
       }
     ]
   },
   {
     path: 'profil-enseignant',
-    component: ProfilEnseignantComponent
+    component: ProfilEnseignantComponent,
+    children:[
+      {
+        path: 'home',
+        component: HomeComponent
+      },
+      {
+        path: 'syllabus-cours',
+        component: SyllabusCoursComponent
+      },
+      {
+        path: 'cahier-de-texte',
+        component: CahierDeTexteComponent
+      }
+    ]
   },
 
 ];

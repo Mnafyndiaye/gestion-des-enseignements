@@ -52,6 +52,6 @@ create TABLE Cours(
 
 create TABLE Classe(
     idClasse int auto_increment primary key,
-    nomClasse VARCHAR(20),
+    nomClasse VARCHAR( 20 ),
     anneeScolaire DATE
 );

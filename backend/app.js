@@ -1,13 +1,23 @@
-// app.js
-
 // Importer Express
 const express = require('express');
-const bodyparser = require('body-parser');
+const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const session = require('express-session')
 
 // Créer une instance de l'application
 const app = express();
+const api = require('./routes/api');
 
+// Middleware pour le parsing du corps de la requête JSON
+app.use(bodyParser.json());
+
+// Middleware pour la gestion des sessions
+app.use(session({
+  secret: 'Mazeyasimon',
+  resave: false,
+  saveUninitialized: true
+}));
+// Connexion à la base de données MySQL
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'apinafy',
@@ -22,22 +32,12 @@ connection.connect((err) => {
   }
   console.log('Connecté à la base de données MySQL');
 });
-// Middleware pour le parsing du corps de la requête JSON
-app.use(express.json());
 
-// Route GET
-app.get('/api/hello', (req, res) => {
-    res.json({ message: 'Hello, World!' });
-});
-
-// Route POST
-app.post('/api/echo', (req, res) => {
-    const message = req.body.message;
-    res.json({ echo: message });
-});
+// Utilisez la connexion MySQL dans votre API
+app.use('/api', api(connection));
 
 // Démarrer le serveur
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
