@@ -13,6 +13,8 @@ import { SyllabusCoursComponent } from './syllabus-cours/syllabus-cours.componen
 import { ProfilEnseignantComponent } from './profil-enseignant/profil-enseignant.component';
 import { StudentSidebarComponent } from './student-sidebar/student-sidebar.component';
 import { TeacherSidebarComponent } from './teacher-sidebar/teacher-sidebar.component';
+import { AffichageSyllabusComponent } from './affichage-syllabus/affichage-syllabus.component';
+import { AffichageEvaluationComponent } from './affichage-evaluation/affichage-evaluation.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { TeacherSidebarComponent } from './teacher-sidebar/teacher-sidebar.compo
     SyllabusCoursComponent,
     ProfilEnseignantComponent,
     StudentSidebarComponent,
-    TeacherSidebarComponent
+    TeacherSidebarComponent,
+    AffichageSyllabusComponent,
+    AffichageEvaluationComponent
   ],
   imports: [
     BrowserModule,
