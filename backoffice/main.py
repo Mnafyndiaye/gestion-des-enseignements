@@ -51,7 +51,7 @@ def read():
     conn=connection()
     cursor=conn.cursor()
     cursor.connection.ping()
-    sql=f"SELECT * FROM etudiant ORDER BY `idEtudiant` DESC"
+    sql=f"select idEtudiant,nom,prenom,mail,role,nomClasse from etudiant,classe where etudiant.idclasse = classe.idclasse"
     cursor.execute(sql)
     results=cursor.fetchall()
     conn.commit()
@@ -68,13 +68,14 @@ def renderTreeVIew(data):
     treeScroll.pack(side="right",fill="y")
 
     global treeview
-    cols=("idEtudiant","nom","prenom","Email","role")
+    cols=("idEtudiant","nom","prenom","Email","role","nomClasse")
     treeview=ttk.Treeview(treeFrame,show="headings",style="mystyle.Treeview",yscrollcommand=treeScroll.set,columns=cols)
     treeview.heading("idEtudiant",text="idEtudiant",anchor="w")
     treeview.heading("nom",text="nom",anchor="w")
     treeview.heading("prenom",text="prenom",anchor="w")
     treeview.heading("Email",text="Email",anchor="w")
     treeview.heading("role",text="role",anchor="w")
+    treeview.heading("nomClasse",text="nomClasse",anchor="w")
     
 
     treeview.column("idEtudiant",width=75)
@@ -82,6 +83,7 @@ def renderTreeVIew(data):
     treeview.column("prenom",width=108)
     treeview.column("Email",width=150)
     treeview.column("role",width=150)
+    treeview.column("nomClasse",width=150)
     
     for data in treeview.get_children():
         treeview.delete(data)
