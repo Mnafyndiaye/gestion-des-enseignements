@@ -36,7 +36,7 @@ def read():
     conn=connection()
     cursor=conn.cursor()
     cursor.connection.ping()
-    sql=f"select idCours,nom,prenom,nomCours from cours,enseignant where enseignant.idEnseignant = cours.idEnseignant"
+    sql=f"select idEvaluation,nomCours,nom,prenom,note,commentaire from Evaluation,etudiant,cours where evaluation.idEtudiant = etudiant.idEtudiant and evaluation.idCours = cours.idCours"
     cursor.execute(sql)
     results=cursor.fetchall()
     conn.commit()
@@ -53,19 +53,22 @@ def renderTreeVIew(data):
     treeScroll.pack(side="right",fill="y")
 
     global treeview
-    cols=("idCours","nom","prenom","nomCours")
+    cols=("idEvaluation","nomCours","nom","prenom","note","commentaire")
     treeview=ttk.Treeview(treeFrame,show="headings",style="mystyle.Treeview",yscrollcommand=treeScroll.set,columns=cols)
-    treeview.heading("idCours",text="idCours",anchor="w")
+    treeview.heading("idEvaluation",text="idEvaluation",anchor="w")
+    treeview.heading("nomCours",text="nomCours",anchor="w")
     treeview.heading("nom",text="nom",anchor="w")
     treeview.heading("prenom",text="prenom",anchor="w")
-    treeview.heading("nomCours",text="nomCours",anchor="w")
+    treeview.heading("note",text="note",anchor="w")
+    treeview.heading("commentaire",text="commentaire",anchor="w")
+    
 
-
-    treeview.column("idCours",width=75)
-    treeview.column("nom",width=90)
-    treeview.column("prenom",width=90)
+    treeview.column("idEvaluation",width=75)
     treeview.column("nomCours",width=90)
-   
+    treeview.column("nom",width=90)
+    treeview.column("prenom",width=108)
+    treeview.column("note",width=108)
+    treeview.column("commentaire",width=108)
     for data in treeview.get_children():
         treeview.delete(data)
     for array in data:
@@ -104,7 +107,7 @@ def deleteStudent():
         try:
             conn = connection()
             cursor = conn.cursor()
-            cursor.execute(f"DELETE FROM cours WHERE idCours='{str(deleteData)}'")
+            cursor.execute(f"DELETE FROM evaluation WHERE idEvaluation='{str(deleteData)}'")
             conn.commit()
             conn.close()
         except:
@@ -129,23 +132,27 @@ def editStudent():
 def renderAddWindow():
 
     def addStudent():
-        idEnseignant = int(addStudidEntry.get())
-        nomCours = str(addFnameEntry.get())
+        idEtudiant = int(addStudidEntry.get())
+        idCours = int(addFnameEntry.get())
+        note = int(addLnameEntry.get())
+        commentaire = str(addCommentaireEntry.get())
         
-        if (nomCours == "" or nomCours == " ") or  (idEnseignant == "" or idEnseignant == " "):
+        if (idEtudiant == "" or idEtudiant == " ") or (idCours == "" or idCours == " ") or (note == "" or note == " ") or (commentaire == "" or commentaire == " "):
             messagebox.showinfo("Error", "Please fill up the blank entry",parent=addCanvas)
             return
         else:
-        
-            
-            if os.path.exists("./assets/uploaded/temp.png"):
-                os.remove("./assets/uploaded/temp.png")
-            conn=connection()
-            cursor=conn.cursor()
-            cursor.execute(f"INSERT INTO cours (idEnseignant,nomCours) VALUES ( {idEnseignant} ,'{nomCours}') ")
-            conn.commit()
-            conn.close()
-           
+            # try:
+                
+                if os.path.exists("./assets/uploaded/temp.png"):
+                    os.remove("./assets/uploaded/temp.png")
+                conn=connection()
+                cursor=conn.cursor()
+                cursor.execute(f"INSERT INTO evaluation (idEtudiant,idCours,note,commentaire) VALUES ({idEtudiant},{idCours},{note},'{commentaire}')")
+                conn.commit()
+                conn.close()
+            # except:
+            #     messagebox.showinfo("Error", "Stud ID already exist",parent=addCanvas)
+            #     return
         closeWindow(addWindow)
         renderTreeVIew(read())
 
@@ -155,7 +162,7 @@ def renderAddWindow():
 
     print('render add window')
     addWindow = Tk()
-    addWindow.title('Gestion des enseignements')
+    addWindow.title('Add Window - Student Records Management System')
     addWindow.geometry("720x480")
     addWindow.configure(bg = "#FFFFFF")
     addCanvas = Canvas(addWindow,bg = "#FFFFFF",height = 480,width = 720,bd = 0,highlightthickness = 0,relief = "ridge")
@@ -164,28 +171,52 @@ def renderAddWindow():
     addCanvas.create_image(360.0, 264.0, image=image_image_1)
     image_image_2 = PhotoImage(master=addWindow, file=addWindowAssets("image_2.png"))
     addCanvas.create_image(360.0, 24.0, image=image_image_2)
-    addCanvas.create_text(49.0, 10.0, anchor="nw", text="Ajouter cours", fill="#FFFFFF", font=("Inter SemiBold", 24 * -1))
+    addCanvas.create_text(49.0, 10.0, anchor="nw", text="Ajouter une note a un etudiant", fill="#FFFFFF", font=("Inter SemiBold", 24 * -1))
     image_image_3 = PhotoImage(master=addWindow, file=addWindowAssets("image_3.png"))
     addCanvas.create_image(28.0, 24.0, image=image_image_3)
 
-    # stud id input
+    
+
+
     image_image_5 = PhotoImage(master=addWindow, file=addWindowAssets("image_5.png"))
     addCanvas.create_image(456.0, 104.0, image=image_image_5)
     entry_image_2 = PhotoImage(master=addWindow, file=addWindowAssets("entry_2.png"))
     addCanvas.create_image(455.0, 109.5, image=entry_image_2)
     addStudidEntry = Entry(master=addWindow, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     addStudidEntry.place(x=325.0, y=98.0, width=260.0, height=21.0)
-    addCanvas.create_text(325.0, 85.0, anchor="nw", text="idEnseignant", fill="#000000", font=("Inter", 11 * -1))
+    addCanvas.create_text(325.0, 85.0, anchor="nw", text="idEtudiant", fill="#000000", font=("Inter", 11 * -1))
 
+
+    # fname input
     image_image_4 = PhotoImage(master=addWindow, file=addWindowAssets("image_4.png"))
     addCanvas.create_image(457.0, 166.0, image=image_image_4)
     entry_image_1 = PhotoImage(master=addWindow, file=addWindowAssets("entry_1.png"))
     addCanvas.create_image(456.0, 171.5, image=entry_image_1)
     addFnameEntry = Entry(master=addWindow,bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     addFnameEntry.place(x=326.0, y=160.0, width=260.0, height=21.0)
-    addCanvas.create_text(326.0, 147.0, anchor="nw", text="nomCours", fill="#000000", font=("Inter", 11 * -1))
+    addCanvas.create_text(326.0, 147.0, anchor="nw", text="idCours", fill="#000000", font=("Inter", 11 * -1))
 
-   
+    # lname input
+    image_image_6 = PhotoImage(master=addWindow, file=addWindowAssets("image_6.png"))
+    addCanvas.create_image(457.0,230.0,image=image_image_6)
+    entry_image_3 = PhotoImage(master=addWindow, file=addWindowAssets("entry_3.png"))
+    addCanvas.create_image(456.0,235.5,image=entry_image_3)
+    addLnameEntry = Entry(master=addWindow, bd=0,bg="#FFFFFF",fg="#000716",highlightthickness=0)
+    addLnameEntry.place(x=326.0,y=224.0,width=260.0,height=21.0)
+    addCanvas.create_text(326.0,211.0,anchor="nw",text="note",fill="#000000",font=("Inter", 11 * -1))
+
+
+    # lname input
+    image_image_7 = PhotoImage(master=addWindow, file=addWindowAssets("image_6.png"))
+    addCanvas.create_image(457.0,300.0,image=image_image_7)
+    entry_image_4 = PhotoImage(master=addWindow, file=addWindowAssets("entry_3.png"))
+    addCanvas.create_image(456.0,310.5,image=entry_image_4)
+    addCommentaireEntry = Entry(master=addWindow, bd=0,bg="#FFFFFF",fg="#000716",highlightthickness=0)
+    addCommentaireEntry.place(x=326.0,y=300.0,width=260.0,height=21.0)
+    addCanvas.create_text(326.0,280.0,anchor="nw",text="commentaire",fill="#000000",font=("Inter", 11 * -1))
+
+    
+
     
     
 
@@ -209,13 +240,11 @@ def renderAddWindow():
 def renderEditWindow(selectedStudData):
     def editStudent():
         selectedStudid = selectedStudData[0]
-        studid = str(editStudidEntry.get())
-        fname = str(editFnameEntry.get())
-        lname = str(editLnameEntry.get())
-        phone = str(editPhoneEntry.get())
-        email = str(editEmailEntry.get())
-        address = str(editAddressEntry.get())
-        if (studid == "" or studid == " ") or (fname == "" or fname == " ") or (lname == "" or lname == " ") or (phone == "" or phone == " ") or (email == "" or email == " ") or (address == "" or address == " "):
+        idEnseignant = str(editStudidEntry.get())
+        nom = str(editFnameEntry.get())
+        prenom = str(editLnameEntry.get())
+        
+        if (nom == "" or nom == " ") or (prenom == "" or prenom == " "):
             messagebox.showinfo("Error", "Please fill up the blank entry",parent=editCanvas)
             return
         else:
@@ -227,7 +256,7 @@ def renderEditWindow(selectedStudData):
                     profile_img = profile_img.convert("RGB")
                     conn = connection()
                     cursor = conn.cursor()
-                    cursor.execute(f"SELECT * FROM students WHERE stud_id='{studid}' ")
+                    cursor.execute(f"SELECT * FROM enseignant WHERE idEnseignant='{idEnseignant}' ")
                     result = cursor.fetchone()
                     conn.commit()
                     conn.close()
@@ -235,13 +264,13 @@ def renderEditWindow(selectedStudData):
                         os.remove(f"./assets/uploaded/{result[1]}")
                     conn = connection()
                     cursor = conn.cursor()
-                    cursor.execute(f"UPDATE students SET stud_id='{studid}',fname='{fname}',lname='{lname}',phone='{phone}',email='{email}',address='{address}',date_update='{getCurrentDate()}' WHERE stud_id='{selectedStudid}' ")
+                    cursor.execute(f"UPDATE enseignant SET nom='{nom}',prenom='{prenom}' WHERE idEnseignant='{selectedStudid}' ")
                     conn.commit()
                     conn.close()
                 except:
                     conn = connection()
                     cursor = conn.cursor()
-                    cursor.execute(f"UPDATE students SET stud_id='{studid}',fname='{fname}',lname='{lname}',phone='{phone}',email='{email}',address='{address}',date_update='{getCurrentDate()}' WHERE stud_id='{selectedStudid}' ")
+                    cursor.execute(f"UPDATE enseignant SET nom='{nom}',prenom='{prenom}' WHERE idEnseignant='{selectedStudid}' ")
                     conn.commit()
                     conn.close()
                 if os.path.exists("./assets/uploaded/temp.png"):
@@ -263,15 +292,13 @@ def renderEditWindow(selectedStudData):
     
 
     print('render edit window')
-    studid=selectedStudData[0]
-    fname=selectedStudData[1]
-    lname=selectedStudData[2]
-    phone=selectedStudData[3]
-    email=selectedStudData[4]
-    address=selectedStudData[5]
+    idEnseignant=selectedStudData[0]
+    nom=selectedStudData[1]
+    prenom=selectedStudData[2]
+   
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM students WHERE stud_id='{studid}' ")
+    cursor.execute(f"SELECT * FROM enseignant WHERE idEnseignat='{idEnseignant}' ")
     result = cursor.fetchone()
     conn.commit()
     conn.close()
@@ -297,7 +324,7 @@ def renderEditWindow(selectedStudData):
     editStudidEntry = Entry(master=editWindow, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     editStudidEntry.place(x=325.0, y=98.0, width=260.0, height=21.0)
     editCanvas.create_text(325.0, 85.0, anchor="nw", text="Student ID", fill="#000000", font=("Inter", 11 * -1))
-    editStudidEntry.insert(0,studid)
+    editStudidEntry.insert(0,idEnseignant)
 
     # fname input
     image_image_4 = PhotoImage(master=editWindow, file=editWindowAssets("image_4.png"))
@@ -307,7 +334,7 @@ def renderEditWindow(selectedStudData):
     editFnameEntry = Entry(master=editWindow,bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     editFnameEntry.place(x=326.0, y=160.0, width=260.0, height=21.0)
     editCanvas.create_text(326.0, 147.0, anchor="nw", text="First Name", fill="#000000", font=("Inter", 11 * -1))
-    editFnameEntry.insert(0,fname)
+    editFnameEntry.insert(0,nom)
 
     # lname input
     image_image_6 = PhotoImage(master=editWindow, file=editWindowAssets("image_6.png"))
@@ -317,37 +344,8 @@ def renderEditWindow(selectedStudData):
     editLnameEntry = Entry(master=editWindow, bd=0,bg="#FFFFFF",fg="#000716",highlightthickness=0)
     editLnameEntry.place(x=326.0,y=224.0,width=260.0,height=21.0)
     editCanvas.create_text(326.0,211.0,anchor="nw",text="Last Name",fill="#000000",font=("Inter", 11 * -1))
-    editLnameEntry.insert(0,lname)
+    editLnameEntry.insert(0,prenom)
 
-    # phone input
-    image_image_7 = PhotoImage(master=editWindow, file=editWindowAssets("image_7.png"))
-    editCanvas.create_image(166.0,294.0,image=image_image_7)
-    entry_image_4 = PhotoImage(master=editWindow, file=editWindowAssets("entry_4.png"))
-    editCanvas.create_image(165.0,299.5,image=entry_image_4)
-    editPhoneEntry = Entry(master=editWindow, bd=0,bg="#FFFFFF",fg="#000716",highlightthickness=0)
-    editPhoneEntry.place(x=35.0,y=288.0,width=260.0,height=21.0)
-    editCanvas.create_text(35.0,275.0,anchor="nw",text="Phone #",fill="#000000",font=("Inter", 11 * -1))
-    editPhoneEntry.insert(0,phone)
-
-    # email input
-    image_image_8 = PhotoImage(master=editWindow, file=editWindowAssets("image_8.png"))
-    editCanvas.create_image(457.0,294.0,image=image_image_8)
-    entry_image_5 = PhotoImage(master=editWindow, file=editWindowAssets("entry_5.png"))
-    editCanvas.create_image(456.0,299.5,image=entry_image_5)
-    editEmailEntry = Entry(master=editWindow, bd=0,bg="#FFFFFF",fg="#000716",highlightthickness=0)
-    editEmailEntry.place(x=326.0,y=288.0,width=260.0,height=21.0)
-    editCanvas.create_text(326.0,275.0,anchor="nw",text="Email",fill="#000000",font=("Inter", 11 * -1))
-    editEmailEntry.insert(0,email)
-    
-    # editress input
-    image_image_9 = PhotoImage(master=editWindow, file=editWindowAssets("image_9.png"))
-    editCanvas.create_image(311.0, 358.0, image=image_image_9)
-    entry_image_6 = PhotoImage(master=editWindow, file=editWindowAssets("entry_6.png"))
-    editCanvas.create_image(310.5, 363.5, image=entry_image_6)
-    editAddressEntry = Entry(master=editWindow, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    editAddressEntry.place(x=35.0, y=352.0, width=551.0, height=21.0)
-    editCanvas.create_text(35.0,339.0,anchor="nw",text="editress",fill="#000000",font=("Inter", 11 * -1))
-    editAddressEntry.insert(0,address)
 
     
 
@@ -376,7 +374,7 @@ def renderEditWindow(selectedStudData):
 
 
 mainWindow = Tk()
-mainWindow.title('Gestion des enseignements')
+mainWindow.title('Home - Student Records Management System')
 mainWindow.geometry("1080x720")
 mainWindow.configure(bg = "#FFFFFF")
 mainCanvas = Canvas(mainWindow,bg = "#FFFFFF",height = 720,width = 1080,bd = 0,highlightthickness = 0,relief = "ridge")
@@ -390,7 +388,7 @@ image_image_2 = PhotoImage(file=mainWindowAssets("image_2.png"))
 image_2 = mainCanvas.create_image(648.0,398.0,image=image_image_2)
 image_image_3 = PhotoImage(file=mainWindowAssets("image_3.png"))
 image_3 = mainCanvas.create_image(540.0,37.0,image=image_image_3)
-mainCanvas.create_text(73.0,15.0,anchor="nw",text="Gestion des cours",fill="#FFFFFF",font=("Inter SemiBold", 36 * -1))
+mainCanvas.create_text(73.0,15.0,anchor="nw",text="Gestion des Evaluations",fill="#FFFFFF",font=("Inter SemiBold", 36 * -1))
 image_image_4 = PhotoImage(file=mainWindowAssets("image_4.png"))
 image_4 = mainCanvas.create_image(38.0,36.0,image=image_image_4)
 image_image_5 = PhotoImage(file=mainWindowAssets("image_5.png"))

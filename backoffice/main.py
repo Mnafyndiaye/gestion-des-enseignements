@@ -51,7 +51,7 @@ def read():
     conn=connection()
     cursor=conn.cursor()
     cursor.connection.ping()
-    sql=f"SELECT * FROM etudiant ORDER BY `idEtudiant` DESC"
+    sql=f"select idEtudiant,nom,prenom,mail,role,nomClasse from etudiant,classe where etudiant.idclasse = classe.idclasse"
     cursor.execute(sql)
     results=cursor.fetchall()
     conn.commit()
@@ -68,13 +68,14 @@ def renderTreeVIew(data):
     treeScroll.pack(side="right",fill="y")
 
     global treeview
-    cols=("idEtudiant","nom","prenom","Email","role")
+    cols=("idEtudiant","nom","prenom","Email","role","nomClasse")
     treeview=ttk.Treeview(treeFrame,show="headings",style="mystyle.Treeview",yscrollcommand=treeScroll.set,columns=cols)
     treeview.heading("idEtudiant",text="idEtudiant",anchor="w")
     treeview.heading("nom",text="nom",anchor="w")
     treeview.heading("prenom",text="prenom",anchor="w")
     treeview.heading("Email",text="Email",anchor="w")
     treeview.heading("role",text="role",anchor="w")
+    treeview.heading("nomClasse",text="nomClasse",anchor="w")
     
 
     treeview.column("idEtudiant",width=75)
@@ -82,6 +83,7 @@ def renderTreeVIew(data):
     treeview.column("prenom",width=108)
     treeview.column("Email",width=150)
     treeview.column("role",width=150)
+    treeview.column("nomClasse",width=150)
     
     for data in treeview.get_children():
         treeview.delete(data)
@@ -114,7 +116,7 @@ def deleteStudent():
     except:
         messagebox.showwarning("Info", "Please select a data row")
         return
-    decision = messagebox.askquestion("Warning", "Delete the selected student?")
+    decision = messagebox.askquestion("Avertissement", "Voulez vous supprimez cette etudiant ?")
     if decision != "yes":
         return 
     else:
@@ -155,11 +157,12 @@ def viewStudent():
 def renderAddWindow():
 
     def addStudent():
+        idclasse = int(addClasseId.get())
         role = str(addStudidEntry.get())
         nom = str(addFnameEntry.get())
         prenom = str(addLnameEntry.get())
         mail = str(addEmailEntry.get())
-        if (nom == "" or nom == " ") or (prenom == "" or prenom == " ") or (mail == "" or mail == " "):
+        if (idclasse == "" or idclasse == " ") or (nom == "" or nom == " ") or (prenom == "" or prenom == " ") or (mail == "" or mail == " "):
             messagebox.showinfo("Error", "Please fill up the blank entry",parent=addCanvas)
             return
         else:
@@ -169,7 +172,7 @@ def renderAddWindow():
                     os.remove("./assets/uploaded/temp.png")
                 conn=connection()
                 cursor=conn.cursor()
-                cursor.execute(f"INSERT INTO etudiant (nom,prenom,mail,role) VALUES ('{nom}','{prenom}','{mail}','{role}') ")
+                cursor.execute(f"INSERT INTO etudiant (nom,prenom,mail,role,idclasse) VALUES ('{nom}','{prenom}','{mail}','{role}',{idclasse}) ")
                 conn.commit()
                 conn.close()
             except:
@@ -208,15 +211,19 @@ def renderAddWindow():
     addCanvas.create_text(325.0, 85.0, anchor="nw", text="Role", fill="#000000", font=("Inter", 11 * -1))
 
 
-    image_image_5 = PhotoImage(master=addWindow, file=addWindowAssets("image_5.png"))
-    addCanvas.create_image(456.0, 104.0, image=image_image_5)
-    entry_image_2 = PhotoImage(master=addWindow, file=addWindowAssets("entry_2.png"))
-    addCanvas.create_image(455.0, 109.5, image=entry_image_2)
-    addStudidEntry = Entry(master=addWindow, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    addStudidEntry.place(x=325.0, y=98.0, width=260.0, height=21.0)
-    addCanvas.create_text(325.0, 85.0, anchor="nw", text="Role", fill="#000000", font=("Inter", 11 * -1))
+
 
     # fname input
+    image_image_4 = PhotoImage(master=addWindow, file=addWindowAssets("image_4.png"))
+    addCanvas.create_image(457.0, 166.0, image=image_image_4)
+    entry_image_1 = PhotoImage(master=addWindow, file=addWindowAssets("entry_1.png"))
+    addCanvas.create_image(456.0, 171.5, image=entry_image_1)
+    addClasseId = Entry(master=addWindow,bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    addClasseId.place(x=35.0, y=160.0, width=260.0, height=21.0)
+    addCanvas.create_text(35.0, 147.0, anchor="nw", text="idclasse", fill="#000000", font=("Inter", 11 * -1))
+
+
+
     image_image_4 = PhotoImage(master=addWindow, file=addWindowAssets("image_4.png"))
     addCanvas.create_image(457.0, 166.0, image=image_image_4)
     entry_image_1 = PhotoImage(master=addWindow, file=addWindowAssets("entry_1.png"))
@@ -234,6 +241,10 @@ def renderAddWindow():
     addLnameEntry.place(x=326.0,y=224.0,width=260.0,height=21.0)
     addCanvas.create_text(326.0,211.0,anchor="nw",text="prenom",fill="#000000",font=("Inter", 11 * -1))
 
+
+
+
+
     # Email
     image_image_7 = PhotoImage(master=addWindow, file=addWindowAssets("image_7.png"))
     addCanvas.create_image(166.0,294.0,image=image_image_7)
@@ -242,6 +253,7 @@ def renderAddWindow():
     addEmailEntry = Entry(master=addWindow, bd=0,bg="#FFFFFF",fg="#000716",highlightthickness=0)
     addEmailEntry.place(x=35.0,y=288.0,width=260.0,height=21.0)
     addCanvas.create_text(35.0,275.0,anchor="nw",text="mail",fill="#000000",font=("Inter", 11 * -1))
+    
 
     
 

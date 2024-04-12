@@ -26,7 +26,7 @@ def connection():
         host='localhost',
         user='root',
         password='',
-        db='etudiants'
+        db='enseignements_db'
     )
     return conn
 

@@ -8,7 +8,8 @@ CREATE TABLE Etudiant (
     nom VARCHAR(25),
     prenom VARCHAR(30),
     mail VARCHAR(30),
-    role ENUM('etudiant', 'responsable_classe') DEFAULT 'etudiant'
+    role ENUM('etudiant', 'responsable_classe') DEFAULT 'etudiant',
+    idclasse int(11)
 );
 
 -- Table des enseignants
@@ -45,7 +46,7 @@ CREATE TABLE Cours (
 CREATE TABLE Classe (
     idClasse INT AUTO_INCREMENT PRIMARY KEY,
     nomClasse VARCHAR(20),
-    anneeScolaire DATE
+    anneeScolaire varchar(20)
 );
 
 -- Table des évaluations
@@ -89,7 +90,7 @@ CREATE TABLE Syllabus (
 CREATE TABLE CahierTexte (
     idEntrée INT AUTO_INCREMENT PRIMARY KEY,
     idCours INT,
-    dateEntrée DATE,
+    dateEntree varchar(30),
     description TEXT,
     FOREIGN KEY (idCours) REFERENCES Cours(idCours)
 );
