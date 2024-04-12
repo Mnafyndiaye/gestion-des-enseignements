@@ -1,29 +1,15 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-// Route POST pour la soumission du formulaire de connexion
-router.post('/login', (req, res) => {
-  const { username, password } = req.body;
+// Importez les contrôleurs ou les fonctions nécessaires pour gérer l'authentification
+const authController = require('../controllers/authController');
 
-  // Vérifier les informations d'identification de l'utilisateur dans la base de données
-  const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
-  connection.query(query, [username, password], (error, results) => {
-    if (error) {
-      console.error('Erreur lors de la vérification des informations de connexion :', error);
-      res.status(500).send('Erreur du serveur');
-      return;
-    }
+// Route pour la soumission du formulaire de connexion
+router.post('/login', authController.login);
 
-    // Vérifiez si l'utilisateur existe dans la base de données
-    if (results.length === 0) {
-      res.status(401).send('Nom d\'utilisateur ou mot de passe incorrect');
-      return;
-    }
+// Route pour la déconnexion
+router.post('/logout', authController.logout);
 
-    // L'utilisateur existe dans la base de données, ouvrir une session
-    req.session.user = results[0]; // Stockez les informations de l'utilisateur dans la session
-    res.redirect('/profile'); // Rediriger vers la page de profil de l'utilisateur
-  });
-});
+// Autres routes d'authentification...
 
-module.exports = router
+module.exports = router;
