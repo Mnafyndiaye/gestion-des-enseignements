@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cahier-de-texte',
@@ -6,49 +7,37 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./cahier-de-texte.component.css']
 })
 export class CahierDeTexteComponent {
-  @ViewChild('modalAjouter') modalAjouter!: ElementRef;
-  @ViewChild('btnAjouter') btnAjouter!: ElementRef;
-  @ViewChild('btnValiderAjout') btnValiderAjout!: ElementRef;
-  @ViewChild('btnModifier') btnModifier!: ElementRef;
-  @ViewChild('btnSupprimer') btnSupprimer!: ElementRef;
-  @ViewChild('closeBtn') closeBtn!: ElementRef;
-  @ViewChild('cahierTexte') cahierTexte!: ElementRef;
+  modalVisible: boolean = false;
+  cahierForm: FormGroup;
 
-  // Ouvrir le modal d'ajout
-  openModalAjouter() {
-    this.modalAjouter.nativeElement.style.display = 'block';
+  constructor(private formBuilder: FormBuilder) {
+    this.creerFormulaire();
   }
 
-  // Fermer le modal d'ajout en cliquant sur le bouton 'x' ou en dehors du modal
-  closeModalAjouter() {
-    this.modalAjouter.nativeElement.style.display = 'none';
+  creerFormulaire() {
+    this.cahierForm = this.formBuilder.group({
+      cours: ['', Validators.required],
+      date: ['', Validators.required],
+      description: ['', Validators.required]
+    });
   }
 
-  // Ajouter une nouvelle entrée dans le cahier de texte
+  ouvrirModal() {
+    this.modalVisible = true;
+  }
+
+  fermerModal() {
+    this.modalVisible = false;
+  }
+
   validerAjout() {
-    const selectCours = (document.getElementById('select-cours') as HTMLSelectElement).value;
-    const date = (document.getElementById('date') as HTMLInputElement).value;
-    const description = (document.getElementById('description') as HTMLTextAreaElement).value;
-
-    // Créer un nouvel élément li
-    const nouvelleEntree = document.createElement('li');
-    nouvelleEntree.textContent = `${selectCours} - ${date}: ${description}`;
-
-    // Ajouter la nouvelle entrée à la liste du cahier de texte
-    this.cahierTexte.nativeElement.appendChild(nouvelleEntree);
-
-    // Afficher les boutons "Modifier" et "Supprimer"
-    this.btnModifier.nativeElement.style.display = 'inline';
-    this.btnSupprimer.nativeElement.style.display = 'inline';
-
-    // Fermer le modal d'ajout
-    this.closeModalAjouter();
-  }
-
-  // Supprimer une entrée du cahier de texte
-  supprimerEntree() {
-    this.cahierTexte.nativeElement.innerHTML = ''; // Effacer toutes les entrées
-    this.btnModifier.nativeElement.style.display = 'none'; // Masquer le bouton "Modifier"
-    this.btnSupprimer.nativeElement.style.display = 'none'; // Masquer le bouton "Supprimer"
+    if (this.cahierForm.valid) {
+      const nouvelleEntree = `${this.cahierForm.value.cours} - ${this.cahierForm.value.date}: ${this.cahierForm.value.description}`;
+      // Ajouter la nouvelle entrée à votre liste de cahier de texte
+      this.fermerModal();
+      this.cahierForm.reset();
+    } else {
+      // Gérer les erreurs de validation du formulaire
+    }
   }
 }
