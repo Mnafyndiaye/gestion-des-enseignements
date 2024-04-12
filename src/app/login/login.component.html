@@ -1,13 +1,12 @@
-
 <div class="container pt-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card rounded-0">
-        <div class="card-header bg-success text-white">
-          <h3 class="mb-0">Login</h3>
-        </div>
-        <div class="card-body">
-          <form class="form" #loginForm="ngForm" (submit)="loginUser()">
+    <div class="col-md-5"> <!-- Réduit la largeur de la colonne -->
+      <div class="card rounded-lg shadow-lg p-3 mb-5" style="background-color: rgba(255, 255, 255, 0.595); margin-right: 20px;"> <!-- Utilise rgba pour la couleur de fond transparente -->
+        <div class="card-body d-flex flex-column align-items-center"> <!-- Utilise flexbox pour aligner les éléments au centre -->
+          <div class="card-header bg-success text-black text-center mb-3" style="margin-top: -20px;"> <!-- Élève le fond vert du titre -->
+            <h3 class="mb-0">Login</h3>
+          </div>
+          <form class="form w-100" #loginForm="ngForm" (submit)="loginUser()">
             <div class="form-group">
               <label for="email">Email</label>
               <input id="email" [(ngModel)]="loginUserData.email" name="email" type="email" class="form-control rounded-0" placeholder="Email" [required]="true" [email]="true" #email="ngModel">
@@ -18,17 +17,16 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input id="password" [(ngModel)]="loginUserData.password" name="password" type="password" class="form-control rounded-0" placeholder="Password" [required]="true" [minlength]="6" #password="ngModel">
+              <input id="password" [(ngModel)]="loginUserData.password" name="password" type="password" class="form-control rounded-0 mb-3" placeholder="Password" [required]="true" [minlength]="6" #password="ngModel">
               <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback d-block">
                 <div *ngIf="password.errors?.['required']">Password is required.</div>
                 <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters long.</div>
               </div>
             </div>
-            <button (click)="loginUser()" type="submit" [disabled]="loginForm.invalid" class="btn btn-success btn-block rounded-0">Login</button>
+            <button (click)="loginUser()" type="submit" [disabled]="loginForm.invalid" class="btn btn-success mb-3" style="border-radius: 20px;">Login</button> <!-- Diminue l'effet arrondi du bouton -->
           </form>                              
         </div>
       </div>
     </div>
   </div>
 </div>
-
