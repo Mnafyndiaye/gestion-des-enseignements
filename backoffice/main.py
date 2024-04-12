@@ -41,7 +41,7 @@ def connection():
         host='localhost',
         user='root',
         password='',
-        db='etudiants'
+        db='enseignements_db'
     )
     return conn
 
@@ -68,18 +68,20 @@ def renderTreeVIew(data):
     treeScroll.pack(side="right",fill="y")
 
     global treeview
-    cols=("idEtudiant","nom","prenom","Email")
+    cols=("idEtudiant","nom","prenom","Email","role")
     treeview=ttk.Treeview(treeFrame,show="headings",style="mystyle.Treeview",yscrollcommand=treeScroll.set,columns=cols)
     treeview.heading("idEtudiant",text="idEtudiant",anchor="w")
     treeview.heading("nom",text="nom",anchor="w")
     treeview.heading("prenom",text="prenom",anchor="w")
     treeview.heading("Email",text="Email",anchor="w")
+    treeview.heading("role",text="role",anchor="w")
     
 
     treeview.column("idEtudiant",width=75)
     treeview.column("nom",width=90)
     treeview.column("prenom",width=108)
     treeview.column("Email",width=150)
+    treeview.column("role",width=150)
     
     for data in treeview.get_children():
         treeview.delete(data)
@@ -153,6 +155,7 @@ def viewStudent():
 def renderAddWindow():
 
     def addStudent():
+        role = str(addStudidEntry.get())
         nom = str(addFnameEntry.get())
         prenom = str(addLnameEntry.get())
         mail = str(addEmailEntry.get())
@@ -166,7 +169,7 @@ def renderAddWindow():
                     os.remove("./assets/uploaded/temp.png")
                 conn=connection()
                 cursor=conn.cursor()
-                cursor.execute(f"INSERT INTO etudiant (nom,prenom,mail) VALUES ('{nom}','{prenom}','{mail}') ")
+                cursor.execute(f"INSERT INTO etudiant (nom,prenom,mail,role) VALUES ('{nom}','{prenom}','{mail}','{role}') ")
                 conn.commit()
                 conn.close()
             except:
@@ -195,13 +198,23 @@ def renderAddWindow():
     addCanvas.create_image(28.0, 24.0, image=image_image_3)
 
     # stud id input
+
     image_image_5 = PhotoImage(master=addWindow, file=addWindowAssets("image_5.png"))
     addCanvas.create_image(456.0, 104.0, image=image_image_5)
     entry_image_2 = PhotoImage(master=addWindow, file=addWindowAssets("entry_2.png"))
     addCanvas.create_image(455.0, 109.5, image=entry_image_2)
     addStudidEntry = Entry(master=addWindow, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     addStudidEntry.place(x=325.0, y=98.0, width=260.0, height=21.0)
-    addCanvas.create_text(325.0, 85.0, anchor="nw", text="idEtudiant", fill="#000000", font=("Inter", 11 * -1))
+    addCanvas.create_text(325.0, 85.0, anchor="nw", text="Role", fill="#000000", font=("Inter", 11 * -1))
+
+
+    image_image_5 = PhotoImage(master=addWindow, file=addWindowAssets("image_5.png"))
+    addCanvas.create_image(456.0, 104.0, image=image_image_5)
+    entry_image_2 = PhotoImage(master=addWindow, file=addWindowAssets("entry_2.png"))
+    addCanvas.create_image(455.0, 109.5, image=entry_image_2)
+    addStudidEntry = Entry(master=addWindow, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    addStudidEntry.place(x=325.0, y=98.0, width=260.0, height=21.0)
+    addCanvas.create_text(325.0, 85.0, anchor="nw", text="Role", fill="#000000", font=("Inter", 11 * -1))
 
     # fname input
     image_image_4 = PhotoImage(master=addWindow, file=addWindowAssets("image_4.png"))
@@ -275,7 +288,7 @@ def renderEditWindow(selectedStudData):
                     profile_img = profile_img.convert("RGB")
                     conn = connection()
                     cursor = conn.cursor()
-                    cursor.execute(f"SELECT * FROM etudiants WHERE idEtudiant='{idEtudiant}' ")
+                    cursor.execute(f"SELECT * FROM etudiant WHERE idEtudiant='{idEtudiant}' ")
                     result = cursor.fetchone()
                     conn.commit()
                     conn.close()
@@ -283,13 +296,13 @@ def renderEditWindow(selectedStudData):
                         os.remove(f"./assets/uploaded/{result[1]}")
                     conn = connection()
                     cursor = conn.cursor()
-                    cursor.execute(f"UPDATE etudiants SET nom='{nom}',prenom='{prenom}',mail='{mail}' WHERE idEtudiant='{selectedStudid}' ")
+                    cursor.execute(f"UPDATE etudiant SET nom='{nom}',prenom='{prenom}',mail='{mail}' WHERE idEtudiant='{selectedStudid}' ")
                     conn.commit()
                     conn.close()
                 except:
                     conn = connection()
                     cursor = conn.cursor()
-                    cursor.execute(f"UPDATE etudiants SET nom='{nom}',prenom='{prenom}',mail='{mail}' WHERE idEtudiant='{selectedStudid}' ")
+                    cursor.execute(f"UPDATE etudiant SET nom='{nom}',prenom='{prenom}',mail='{mail}' WHERE idEtudiant='{selectedStudid}' ")
                     conn.commit()
                     conn.close()
                 if os.path.exists("./assets/uploaded/temp.png"):
@@ -423,7 +436,7 @@ def renderViewWindow(selectedStudData):
 
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM etudiants WHERE idEtudiant='{idEtudiant}' ")
+    cursor.execute(f"SELECT * FROM etudiant WHERE idEtudiant='{idEtudiant}' ")
     result = cursor.fetchone()
     conn.commit()
     conn.close()
