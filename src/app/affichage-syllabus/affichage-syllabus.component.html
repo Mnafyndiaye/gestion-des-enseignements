@@ -1,0 +1,10 @@
+    <p>affichage-syllabus works!</p>
+    <div class="syllabus-container">
+        <h1>Syllabus</h1>
+        <ul class="syllabus-list">
+        <li *ngFor="let syllabus of syllabusData">
+            <a [href]="syllabus.document" download="{{ syllabus.cours }}">{{ syllabus.cours }}</a>
+        </li>
+        </ul>
+    </div>
+</html>

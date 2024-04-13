@@ -1,0 +1,20 @@
+/* styles.css */
+
+/* Styles pour l'ensemble du document */
+body {
+    font-family: Arial, sans-serif;
+    color: white; /* Couleur du texte */
+    background-color: #333; /* Couleur de fond */
+    padding: 20px;
+}
+/* Styles pour les évaluations */
+.evaluation {
+    background-color: #444; /* Couleur de fond pour chaque évaluation */
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+/* Styles pour le message "Aucune évaluation disponible pour le moment" */
+.no-evaluations {
+    color: white; /* Couleur du texte */
+}
