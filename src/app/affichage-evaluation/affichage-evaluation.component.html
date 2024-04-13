@@ -1,4 +1,28 @@
+<!-- affichage-evaluation.component.html -->
+
 <p>affichage-evaluation works!</p>
 
 
+
+=======
+<div id="evaluations-container">
+    <div class="evaluation" *ngFor="let evaluation of evaluations; let i = index">
+        <h3>Évaluation {{ i + 1 }}</h3>
+        <p><strong>Étudiant:</strong> {{ evaluation.etudiant }}</p>
+        <h4>Présentation de l'enseignement</h4>
+        <p>Syllabus fourni: {{ evaluation.presentation.syllabus }}</p>
+        <p>Objectifs clairement énoncés: {{ evaluation.presentation.objectifs }}</p>
+        <h4>Déroulement de l'enseignement</h4>
+        <p>Contenu conforme: {{ evaluation.deroulement.conforme }}</p>
+        <p>Support de cours fourni: {{ evaluation.deroulement.support }}</p>
+        <h4>Conditions d'apprentissage</h4>
+        <p>Capacités des salles: {{ evaluation.conditions.salle }}</p>
+        <h4>Suggestions pour l'amélioration de l'enseignement</h4>
+        <p>Lien avec les autres EC: {{ evaluation.suggestions.liens }}</p>
+        <p>Commentaires: {{ evaluation.suggestions.commentaires }}</p>
+    </div>
+    <div class="no-evaluations" *ngIf="evaluations.length === 0">
+        <p>Aucune évaluation n'est disponible pour le moment.</p>
+    </div>
+</div>
 

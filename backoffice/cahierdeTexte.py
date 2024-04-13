@@ -26,7 +26,7 @@ def connection():
         host='localhost',
         user='root',
         password='',
-        db='etudiants'
+        db='enseignements_db'
     )
     return conn
 
@@ -36,7 +36,7 @@ def read():
     conn=connection()
     cursor=conn.cursor()
     cursor.connection.ping()
-    sql=f"SELECT * FROM cahier_texte ORDER BY `idCahier` DESC"
+    sql=f"select idEntree,nomCours,DateEntree,Description,nom,prenom from cahiertexte,cours,enseignant where cahierTexte.idCours = cours.idCours and cours.idEnseignant = Enseignant.idEnseignant"
     cursor.execute(sql)
     results=cursor.fetchall()
     conn.commit()
@@ -53,22 +53,26 @@ def renderTreeVIew(data):
     treeScroll.pack(side="right",fill="y")
 
     global treeview
-    cols=("idCahier","idCours","Date","Description")
+    cols=("idEntree","nomCours","Date Entree","Description","nom","prenom")
     treeview=ttk.Treeview(treeFrame,show="headings",style="mystyle.Treeview",yscrollcommand=treeScroll.set,columns=cols)
-    treeview.heading("idCahier",text="idCahier",anchor="w")
-    treeview.heading("idCours",text="idCours",anchor="w")
-    treeview.heading("Date",text="Date",anchor="w")
+    treeview.heading("idEntree",text="idEntree",anchor="w")
+    treeview.heading("nomCours",text="nomCours",anchor="w")
+    treeview.heading("Date Entree",text="Date Entree",anchor="w")
     treeview.heading("Description",text="Description",anchor="w")
+    treeview.heading("nom",text="nom",anchor="w")
+    treeview.heading("prenom",text="prenom",anchor="w")
     
 
-    treeview.column("idCahier",width=75)
-    treeview.column("idCours",width=90)
-    treeview.column("Date",width=108)
-    treeview.column("Description",width=108)
+    treeview.column("idEntree",width=75)
+    treeview.column("nomCours",width=75)
+    treeview.column("Date Entree",width=90)
+    treeview.column("Description",width=90)
+    treeview.column("nom",width=90)
+    treeview.column("prenom",width=90)
     for data in treeview.get_children():
         treeview.delete(data)
     for array in data:
-        treeview.insert('',tk.END,values=array[0:],iid=array[0])
+        treeview.insert('',tk.END,values=array[0:])
         print(array)
     treeview.place(x=0,y=0,width=745.0,height=535.0)
     treeScroll.config(command=treeview.yview)
@@ -103,7 +107,7 @@ def deleteStudent():
         try:
             conn = connection()
             cursor = conn.cursor()
-            cursor.execute(f"DELETE FROM cahier_texte WHERE idCahier='{str(deleteData)}'")
+            cursor.execute(f"DELETE FROM cahierTexte WHERE idEntree='{str(deleteData)}'")
             conn.commit()
             conn.close()
         except:
@@ -128,7 +132,7 @@ def editStudent():
 def renderAddWindow():
 
     def addStudent():
-        idCours = str(addStudidEntry.get())
+        idCours = int(addStudidEntry.get())
         Date = str(addFnameEntry.get())
         Description = str(addLnameEntry.get())
         
@@ -136,18 +140,15 @@ def renderAddWindow():
             messagebox.showinfo("Error", "Please fill up the blank entry",parent=addCanvas)
             return
         else:
-            try:
                 
                 if os.path.exists("./assets/uploaded/temp.png"):
                     os.remove("./assets/uploaded/temp.png")
                 conn=connection()
                 cursor=conn.cursor()
-                cursor.execute(f"INSERT INTO cahier_texte (idCours,Date,Description) VALUES ('{idCours}','{Date}','{Description}') ")
+                cursor.execute(f"INSERT INTO cahierTexte (idCours,DateEntree,Description) VALUES ({idCours},'{Date}','{Description}') ")
                 conn.commit()
                 conn.close()
-            except:
-                messagebox.showinfo("Error", "Stud ID already exist",parent=addCanvas)
-                return
+           
         closeWindow(addWindow)
         renderTreeVIew(read())
 

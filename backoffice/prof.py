@@ -26,7 +26,7 @@ def connection():
         host='localhost',
         user='root',
         password='',
-        db='etudiants'
+        db='enseignements_db'
     )
     return conn
 
@@ -53,16 +53,18 @@ def renderTreeVIew(data):
     treeScroll.pack(side="right",fill="y")
 
     global treeview
-    cols=("idEnseignant","nom","prenom")
+    cols=("idEnseignant","nom","prenom","role")
     treeview=ttk.Treeview(treeFrame,show="headings",style="mystyle.Treeview",yscrollcommand=treeScroll.set,columns=cols)
     treeview.heading("idEnseignant",text="idEnseignant",anchor="w")
     treeview.heading("nom",text="nom",anchor="w")
     treeview.heading("prenom",text="prenom",anchor="w")
+    treeview.heading("role",text="role",anchor="w")
     
 
     treeview.column("idEnseignant",width=75)
     treeview.column("nom",width=90)
     treeview.column("prenom",width=108)
+    treeview.column("role",width=108)
     for data in treeview.get_children():
         treeview.delete(data)
     for array in data:
@@ -126,11 +128,11 @@ def editStudent():
 def renderAddWindow():
 
     def addStudent():
-        # studid = str(addStudidEntry.get())
+        role = str(addStudidEntry.get())
         nom = str(addFnameEntry.get())
         prenom = str(addLnameEntry.get())
         
-        if (prenom == "" or prenom == " ") or (nom == "" or nom == " "):
+        if (role == "" or role == " ") or (prenom == "" or prenom == " ") or (nom == "" or nom == " "):
             messagebox.showinfo("Error", "Please fill up the blank entry",parent=addCanvas)
             return
         else:
@@ -140,7 +142,7 @@ def renderAddWindow():
                     os.remove("./assets/uploaded/temp.png")
                 conn=connection()
                 cursor=conn.cursor()
-                cursor.execute(f"INSERT INTO enseignant (nom,prenom) VALUES ('{nom}','{prenom}')")
+                cursor.execute(f"INSERT INTO enseignant (nom,prenom,role) VALUES ('{nom}','{prenom}','{role}')")
                 conn.commit()
                 conn.close()
             except:
@@ -169,6 +171,16 @@ def renderAddWindow():
     addCanvas.create_image(28.0, 24.0, image=image_image_3)
 
     
+
+
+    image_image_5 = PhotoImage(master=addWindow, file=addWindowAssets("image_5.png"))
+    addCanvas.create_image(456.0, 104.0, image=image_image_5)
+    entry_image_2 = PhotoImage(master=addWindow, file=addWindowAssets("entry_2.png"))
+    addCanvas.create_image(455.0, 109.5, image=entry_image_2)
+    addStudidEntry = Entry(master=addWindow, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    addStudidEntry.place(x=325.0, y=98.0, width=260.0, height=21.0)
+    addCanvas.create_text(325.0, 85.0, anchor="nw", text="Role", fill="#000000", font=("Inter", 11 * -1))
+
 
     # fname input
     image_image_4 = PhotoImage(master=addWindow, file=addWindowAssets("image_4.png"))

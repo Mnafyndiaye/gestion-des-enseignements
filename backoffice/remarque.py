@@ -132,12 +132,12 @@ def editStudent():
 def renderAddWindow():
 
     def addStudent():
-        idEtudiant = int(addStudidEntry.get())
-        idEnseignant = int(addFnameEntry.get())
-        contenuRendu = str(addLnameEntry.get())
-        marque = str(addPhoneEntry.get())
+        idCours = int(addStudidEntry.get())
+        syllabus = int(addFnameEntry.get())
+        objectif = str(addLnameEntry.get())
+        objectif = str(addPhoneEntry.get())
        
-        if (idEtudiant == "" or idEtudiant == " ") or (idEnseignant == "" or idEnseignant == " ") or (contenuRendu == "" or contenuRendu == " ") or (marque == "" or marque == " ") :
+        if (idCours == "" or idCours == " ") or (idCours == "" or idCours == " ") or (syllabus == "" or syllabus == " ") or (objectif == "" or objectif == " ") :
             messagebox.showinfo("Error", "Please fill up the blank entry",parent=addCanvas)
             return
         else:
@@ -147,7 +147,7 @@ def renderAddWindow():
                     os.remove("./assets/uploaded/temp.png")
                 conn=connection()
                 cursor=conn.cursor()
-                cursor.execute(f"INSERT INTO remarque (idEtudiant,idEnseignant,contenuRendu,marque) VALUES ('{idEtudiant}','{idEnseignant}','{contenuRendu}','{marque}') ")
+                cursor.execute(f"INSERT INTO remarque (idCours,syllabusFourni,objectifsClairs,contenuConforme) VALUES ('{idEtudiant}','{idEnseignant}','{contenuRendu}','{objectif}') ")
                 conn.commit()
                 conn.close()
             except:
@@ -182,7 +182,7 @@ def renderAddWindow():
     addCanvas.create_image(455.0, 109.5, image=entry_image_2)
     addStudidEntry = Entry(master=addWindow, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     addStudidEntry.place(x=325.0, y=98.0, width=260.0, height=21.0)
-    addCanvas.create_text(325.0, 85.0, anchor="nw", text="id Etudiant", fill="#000000", font=("Inter", 11 * -1))
+    addCanvas.create_text(325.0, 85.0, anchor="nw", text="id Cours", fill="#000000", font=("Inter", 11 * -1))
 
     # fname input
     image_image_4 = PhotoImage(master=addWindow, file=addWindowAssets("image_4.png"))
@@ -191,7 +191,7 @@ def renderAddWindow():
     addCanvas.create_image(456.0, 171.5, image=entry_image_1)
     addFnameEntry = Entry(master=addWindow,bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     addFnameEntry.place(x=326.0, y=160.0, width=260.0, height=21.0)
-    addCanvas.create_text(326.0, 147.0, anchor="nw", text="Id Enseignant", fill="#000000", font=("Inter", 11 * -1))
+    addCanvas.create_text(326.0, 147.0, anchor="nw", text="SyllabusFourni", fill="#000000", font=("Inter", 11 * -1))
 
     # lname input
     image_image_6 = PhotoImage(master=addWindow, file=addWindowAssets("image_6.png"))
@@ -200,7 +200,7 @@ def renderAddWindow():
     addCanvas.create_image(456.0,235.5,image=entry_image_3)
     addLnameEntry = Entry(master=addWindow, bd=0,bg="#FFFFFF",fg="#000716",highlightthickness=0)
     addLnameEntry.place(x=326.0,y=224.0,width=260.0,height=21.0)
-    addCanvas.create_text(326.0,211.0,anchor="nw",text="Contenu Rendu",fill="#000000",font=("Inter", 11 * -1))
+    addCanvas.create_text(326.0,211.0,anchor="nw",text="ObjectifsClaire",fill="#000000",font=("Inter", 11 * -1))
 
     # phone input
     image_image_7 = PhotoImage(master=addWindow, file=addWindowAssets("image_7.png"))
@@ -209,7 +209,16 @@ def renderAddWindow():
     addCanvas.create_image(165.0,299.5,image=entry_image_4)
     addPhoneEntry = Entry(master=addWindow, bd=0,bg="#FFFFFF",fg="#000716",highlightthickness=0)
     addPhoneEntry.place(x=35.0,y=288.0,width=260.0,height=21.0)
-    addCanvas.create_text(35.0,275.0,anchor="nw",text="marque",fill="#000000",font=("Inter", 11 * -1))
+    addCanvas.create_text(60.0,275.0,anchor="nw",text="SupportFourni",fill="#000000",font=("Inter", 11 * -1))
+
+
+    image_image_8 = PhotoImage(master=addWindow, file=addWindowAssets("image_7.png"))
+    addCanvas.create_image(166.0,294.0,image=image_image_8)
+    entry_image_4 = PhotoImage(master=addWindow, file=addWindowAssets("entry_4.png"))
+    addCanvas.create_image(165.0,299.5,image=entry_image_4)
+    addPhoneEntry = Entry(master=addWindow, bd=0,bg="#FFFFFF",fg="#000716",highlightthickness=0)
+    addPhoneEntry.place(x=326.0,y=288,width=260.0,height=21.0)
+    addCanvas.create_text(326.0,275.0,anchor="nw",text="capaciteSalle",fill="#000000",font=("Inter", 11 * -1))
 
    
 

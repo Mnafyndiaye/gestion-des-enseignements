@@ -10,10 +10,8 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   loginUserData : any = {
 
-  }
-  ;
+  };
   
-
   constructor() {}
 
   ngOnInit() {
