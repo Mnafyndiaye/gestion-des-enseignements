@@ -1,0 +1,12 @@
+.syllabus-container {
+    margin: 20px;
+}
+.syllabus-list {
+    list-style: none;
+    padding: 0;
+}
+.syllabus-list a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
