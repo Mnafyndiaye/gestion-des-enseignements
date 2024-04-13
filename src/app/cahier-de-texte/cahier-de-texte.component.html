@@ -1,1 +1,18 @@
-<p>Hello</p>
+
+<div *ngIf="modalVisible" id="modal-ajouter" class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="fermerModal()">&times;</span>
+        
+        <select id="select-cours" [(ngModel)]="cahierForm.value.cours">
+            <option value="Java">Java</option>
+            <option value="MSI">MSI</option>
+            <option value="HTML">HTML</option>
+        </select>
+        <input type="date" id="date" [(ngModel)]="cahierForm.value.date">
+        <textarea id="description" placeholder="Description..." [(ngModel)]="cahierForm.value.description"></textarea>
+        <button id="btn-valider-ajout" (click)="validerAjout()">Valider</button>
+        <button id="btn-modifier" style="display: none;">Modifier</button>
+        <button id="btn-supprimer" style="display: none;">Supprimer</button>
+    </div>
+</div>
+
